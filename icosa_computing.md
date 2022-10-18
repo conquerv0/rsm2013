@@ -1,2 +1,0 @@
-# Icosa computing
-
