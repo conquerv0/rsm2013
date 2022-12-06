@@ -3,35 +3,40 @@ Operators
 Paul Lee: 60% IRR 
 Roger Melko
 
+# CDL Session 1
+
 ## 1. Icosa Computing
+
+### 1.0 Venture Description: 
+Icosa Computing builds quantum computing based software to solve discrete optimization problems that data-driven institutions, such as finance companies, are faced with. Financial institutions need to process large discrete datasets but are limited to narrow optimization pipelines, making optimization problems difficult to solve. Icosa expands those pipelines with quantum-based methods and special-purpose hardware, enabling them to solve problems that are 100x larger than those solvable by conventional methods. Icosa’s proprietary hyperparameter tuning allows a large time scale of historical data to be considered more accurately, enabling finance companies to beat financial benchmarks and generate higher returns.
 
 Objective: Use quantum computing to enable large scale time horizon to better improve portfolio returns. 
 
-# 1.1 Objective Critique
+### 1.1 Objective Critique
 
 1. The core business is to outsource the capacity to construct optimized portfolio. 
 2. Market seems unclear since hedge fund are already charge a very high premium for portfolio optimization services, the added service is basically adding another markup. 
 
-### 1.1 Venture’s Proposed Objectives
+### 1.2 Venture’s Proposed Objectives
 1. Beat customer benchmarks with current hedge fund client.
 2. Have increased commitments for the $1.36M CAD seed round which includes robust terms & safe caps agreed upon.
 3. Hire 4 technical roles and 1 business role, and define the cap table for early employees.
 
-### 1.2 Proposed New Objectives - 
+### 1.3 Proposed New Objectives - 
 @Paul.Lee.Fellow
 - Objective Setter
 1. State clearly the hypothesis of how they can beat the market using historical data and then show hypothesis works using historical data
 2. Beat customer benchmarks over the next period with the current fund client to show that it works going forward and not just through historical data
 3. Close seed round.
 
-### 1.3 Comments on Proposed New Objectives - 
+### 1.4 Comments on Proposed New Objectives - 
 @Stuart.Nicol.Associate
  - Critiquer
 1. AGREE
 2. AGREE
 3. AGREE
 
-### 1.4 Investor Comments
+### 1.5 Investor Comments
 1. @Samuel.Mugel.Associate
     Really impressed by customer engagement (including signing hedge fund, which is difficult). You will be in a good position if you can prove your technology works with your hedge fund but will be hard to do.
 
@@ -46,3 +51,20 @@ Objective: Use quantum computing to enable large scale time horizon to better im
     3:38
     @Paul.Lee.Fellow
     I funded a company who had to make this choice too: build a product or build company as a hedge fund. We chose to have them build a product and their return was much higher than it would be if they had become a hedge fund.
+
+# CDL Session 2
+
+### 2.1 PROGRESS ON SESSION ONE OBJECTIVES:
+>1. State clearly the hypothesis of how they can beat the market using historical data and then show hypothesis works using historical data. (Complete)
+>2. Beat customer benchmarks over the next period with the current fund client to show that it works going forward and not just through historical data. (Complete)
+>3. Close seed round. (Incomplete) - Will apply two U.S. SBIR government grants for $500K USD total.
+
+### 2.2 Venture PROPOSED 2-MONTH OBJECTIVES:
+>1. Finish AWS integration focusing on the ML hyperparameter tuning with best practices around distributed computing.
+>2. Put the beta version of a fully-automated optimization product in the cloud.
+>3. Acquire original R&D results with the current hardware partnership, demonstrating solving the largest discrete optimization problems ever tackled.
+
+### 2.3 Proposed New Objectives
+1. Finish AWS integration focusing on the ML hyperparameter tuning with best practices around distributed computing.
+2. Create a beta version of a fully automated optimization product in the cloud customers can put into production.
+3. Demonstrate R&D results with hardware partner that optimize with over 100K assets or stocks
