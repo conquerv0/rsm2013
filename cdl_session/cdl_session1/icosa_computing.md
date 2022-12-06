@@ -68,3 +68,48 @@ Objective: Use quantum computing to enable large scale time horizon to better im
 1. Finish AWS integration focusing on the ML hyperparameter tuning with best practices around distributed computing.
 2. Create a beta version of a fully automated optimization product in the cloud customers can put into production.
 3. Demonstrate R&D results with hardware partner that optimize with over 100K assets or stocks
+
+### 2.4 Critiquer: Objectives Change Rationale
+Comments on Proposed New Objectives - 
+@Charles.Lespérance.Associate
+ - Critiquer
+1. AGREE
+2. AGREE
+3. MODIFY: Sign 3 new pilot projects to keep rolling out this product and accelerate live testing
+
+> Changed the last objective since they are at a stage where it make sense to 
+
+### 2.5 LRD Discussion
+@John.Francis.Fellow
+: They've had good results on historical data, and now on real client live market data. Very exciting tech. Proven with a customer. Amazing lead. I love this part. They have a 50/50 share of returns with their hedge fund lead client.
+
+@Charles.Lespérance.Associate
+: Right now they are doing great with the hedgefund's benchmark. 36% vs 12%. Great result. It's the right time to reach out and leverage this to onboard more clients.
+
+@John.Martinis.Fellow
+: I'm quite interested in this company, actually one of my co-founders at colab is working with them as a mentor. Their work is exciting. Their timeline is looking great. I like that they use special hardware optimizers, many of which are developed in Japan. I think it's a good balance of various technologies.
+I'm not a firm believer on doing the R&D results vs signing new pilots.
+
+@Samuel.Mugel.Associate
+: It sounds like they have a good product that blows benchmarks out of the water. Some resources should go into improving tech, but now that you've proven it I would go into trying to monetize it with more clients.
+We found banks to be more approachable than hedgefunds. A lower hanging fruit might be to chase a bank or large company like BMW. Ones that have their own internal banks that experiment with trading. Publishing papers with customers gives 2 things:
+Marketing by announcing what you've done with them
+If in a peer reviewed journal it can pre-emptively dismantle skepticism of results.
+
+@John.Martinis.Fellow
+: They're doing well in the Turkish market which doesn't have all the hedge fund people there trying to optimize the market, so it may be slightly easier. But in the US market they beat S&P Index but it doesn't necessarily mean they beat hedge funds in that market. I think they need to generate more metrics. For instance a virtual return on the US market in comparison to hedge funds.
+
+@Jeff.Larsen.CDL
+1.  Would diversifying client type create benefits for raising?
+@Samuel.Mugel.Associate
+- Benefits: 1. Easy to sign them. 2. Shows bigger TAM for investors. 3. Data. You want more data about how your product performs, thus more benchmarks and credibility.
+
+### 2.6 Deliberation
+
+@John.Martinis
+1. They have made a lot of progress. Just need to generate more data on different experiments. Would love to continue on with the journey. 
+2. Also a big plus that they are a part hardware company. 
+
+@Neil.Wainwright @John.Francis
+1. They acheived quite a lot of results under a month. 
+2. They have a lot of potential to move into other routes of applications. 
