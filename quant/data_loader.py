@@ -19,7 +19,7 @@ class PortLoader():
     @timer
     def load_port(self):
         print("Loading Portfolio Data...")
-        temp = {'port name': [],
+        temp = {'port_name': [],
                 'long_short': [],
                 'holding_period': [],
                 'training_weight': [],
@@ -30,7 +30,7 @@ class PortLoader():
         for filepath in self.data_path:
             filename = os.path.basename(filepath)
             if 'param' in filename and 'results' not in filename:
-                temp['port name'].append(filename)
+                temp['port_name'].append(filename)
                 params = filename.split('_')
                 temp['long_short'].append(int('longs' in params[0]))
                 temp['holding_period'].append(float(params[1]))

@@ -13,7 +13,7 @@ class Analyzer():
         data_path: 
             relative path to the data folder, e.g. './data'
     """
-    def ___init__(self, data_path):
+    def __init__(self, data_path):
         self.__init__()
         self.data_path = data_path
     
@@ -28,8 +28,8 @@ class ReturnAnalyzer(Analyzer):
         data_path: 
             relative path to the data folder, e.g. './data'
     """
-    def ___init__(self, data_path):
-        super().___init__(data_path)
+    def __init__(self, data_path):
+        super().__init__(data_path)
         self.port_params = PortLoader(data_path).port_params
     
     @timer
@@ -63,19 +63,21 @@ class ReturnAnalyzer(Analyzer):
 
         df_metric = pd.DataFrame(data=temp)
         return df_metric
-
-    def sharpe_ratio(self, rf=0):
+    
+    @timer
+    def sharpe_ratio(self, port, rf=0):
         """
         This function returns the daily sharpe ratio of a portfolio
         as (E[R] - rf)/Std(R)
         """
-        port_ret = pd.DataFrame(self.port['Daily Return'].dropna())
+        port_ret = pd.DataFrame(port['Daily Return'].dropna())
         mean = port_ret.mean()
         std = port_ret.std()
         sharpe = (mean - rf)/std
         return float(sharpe)
 
-    def jensen_alpha(self, benchmark, rf=0):
+    @timer
+    def jensen_alpha(self, port, benchmark, rf=0):
         """
         Returns excess return of a portfolio according to
         Rp - (rf + beta x (rm - rf))
