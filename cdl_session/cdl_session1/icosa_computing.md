@@ -70,7 +70,6 @@ Objective: Use quantum computing to enable large scale time horizon to better im
 3. Demonstrate R&D results with hardware partner that optimize with over 100K assets or stocks
 
 ### 2.4 Critiquer: Objectives Change Rationale
-Comments on Proposed New Objectives - 
 @Charles.Lespérance.Associate
  - Critiquer
 1. AGREE
