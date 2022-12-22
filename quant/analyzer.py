@@ -5,6 +5,7 @@ import numpy as np
 from data_loader import PortLoader
 import os
 from utils import *
+import yfinance as yf
 
 class Analyzer():
     """A class that abstracts the analyzing process of portfolio with corresponding training weights
@@ -14,7 +15,6 @@ class Analyzer():
             relative path to the data folder, e.g. './data'
     """
     def __init__(self, data_path):
-        self.__init__()
         self.data_path = data_path
     
     def evaluate():
@@ -32,6 +32,14 @@ class ReturnAnalyzer(Analyzer):
         super().__init__(data_path)
         self.port_params = PortLoader(data_path).port_params
     
+    def load_mkt(self, mkt_ticker: str):
+        """
+        Load the benchmark portfolio for analysis
+        """
+        mkt_port = yf.download(mkt_ticker, start='2022-01-01')
+        mkt_port['Daily Return'] = (mkt_port['Close'] / mkt_port['Close'].shift(1)) -1
+        self.mkt_port = mkt_port.dropna()
+
     @timer
     def evaluate(self):
         temp = {'Params': [],
@@ -49,7 +57,7 @@ class ReturnAnalyzer(Analyzer):
 
                 # Benchmark
                 start, end = port['Dates'].iloc[0], port['Dates'].iloc[-1]
-                mkt_port = mkt_port[mkt_port.index.to_series().between(start, end)]
+                mkt_port = self.mkt_port[self.mkt_port.index.to_series().between(start, end)]
                 mkt_port = mkt_port.dropna()
 
                 # Report Metrics
