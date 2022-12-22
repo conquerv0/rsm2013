@@ -31,17 +31,23 @@ class ReturnAnalyzer(Analyzer):
     def __init__(self, data_path):
         super().__init__(data_path)
         self.port_params = PortLoader(data_path).port_params
+        self.mkt_port = self.load_mkt(mkt_ticker='XU100.IS')
     
     def load_mkt(self, mkt_ticker: str):
         """
         Load the benchmark portfolio for analysis
         """
+        print("Download Market Benchmark...")
         mkt_port = yf.download(mkt_ticker, start='2022-01-01')
         mkt_port['Daily Return'] = (mkt_port['Close'] / mkt_port['Close'].shift(1)) -1
-        self.mkt_port = mkt_port.dropna()
+        return mkt_port.dropna()
 
     @timer
     def evaluate(self):
+        """
+        Returns the benchmark of every portfolio.
+        """
+        print("Begin Evaluating Returns...")
         temp = {'Params': [],
                 'Beta': [],
                 'Sharpe':[],
@@ -64,7 +70,7 @@ class ReturnAnalyzer(Analyzer):
                 port_sharpe = self.sharpe_ratio(port)
                 port_alpha, port_beta = self.jensen_alpha(port, mkt_port)
                 
-                temp['Params'].append(self.port_params['port name'])
+                temp['Params'].append(self.port_params['port_name'])
                 temp['Beta'].append(port_beta)
                 temp['Sharpe'].append(port_sharpe)
                 temp['Alpha'].append(port_alpha)
@@ -72,7 +78,6 @@ class ReturnAnalyzer(Analyzer):
         df_metric = pd.DataFrame(data=temp)
         return df_metric
     
-    @timer
     def sharpe_ratio(self, port, rf=0):
         """
         This function returns the daily sharpe ratio of a portfolio
@@ -84,7 +89,6 @@ class ReturnAnalyzer(Analyzer):
         sharpe = (mean - rf)/std
         return float(sharpe)
 
-    @timer
     def jensen_alpha(self, port, benchmark, rf=0):
         """
         Returns excess return of a portfolio according to
