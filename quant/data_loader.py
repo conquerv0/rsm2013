@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import os
 from utils import *
+import yfinance as yf
 
 class PortLoader():
     """
@@ -15,6 +16,16 @@ class PortLoader():
     def __init__(self, data_path) -> None:
         self.data_path = data_path
         self.port_params = self.load_port()
+        self.mkt_port = self.load_mkt(mkt_ticker='XU100.IS')
+
+    def load_mkt(self, mkt_ticker: str):
+        """
+        Load the benchmark portfolio for analysis
+        """
+        print("Download Market Benchmark...")
+        mkt_port = yf.download(mkt_ticker, start='2022-01-01')
+        mkt_port['Daily Return'] = (mkt_port['Close'] / mkt_port['Close'].shift(1)) -1
+        return mkt_port.dropna()
 
     @timer
     def load_port(self):

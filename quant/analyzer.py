@@ -4,8 +4,8 @@ import pandas as pd
 import numpy as np
 from data_loader import PortLoader
 import os
+import math
 from utils import *
-import yfinance as yf
 
 class Analyzer():
     """A class that abstracts the analyzing process of portfolio with corresponding training weights
@@ -30,17 +30,10 @@ class ReturnAnalyzer(Analyzer):
     """
     def __init__(self, data_path):
         super().__init__(data_path)
-        self.port_params = PortLoader(data_path).port_params
-        self.mkt_port = self.load_mkt(mkt_ticker='XU100.IS')
-    
-    def load_mkt(self, mkt_ticker: str):
-        """
-        Load the benchmark portfolio for analysis
-        """
-        print("Download Market Benchmark...")
-        mkt_port = yf.download(mkt_ticker, start='2022-01-01')
-        mkt_port['Daily Return'] = (mkt_port['Close'] / mkt_port['Close'].shift(1)) -1
-        return mkt_port.dropna()
+        
+        port_data = PortLoader(data_path)
+        self.port_params = port_data.port_params
+        self.mkt_port = port_data.mkt_port
 
     @timer
     def evaluate(self):
@@ -72,13 +65,13 @@ class ReturnAnalyzer(Analyzer):
                 
                 temp['Params'].append(self.port_params['port_name'])
                 temp['Beta'].append(port_beta)
-                temp['Sharpe'].append(port_sharpe)
+                temp['Sharpe'].append(port_sharpe*math.sqrt(252))
                 temp['Alpha'].append(port_alpha)
 
         df_metric = pd.DataFrame(data=temp)
         return df_metric
     
-    def sharpe_ratio(self, port, rf=0):
+    def sharpe_ratio(self, port, rf=0.22/252):
         """
         This function returns the daily sharpe ratio of a portfolio
         as (E[R] - rf)/Std(R)
@@ -89,7 +82,7 @@ class ReturnAnalyzer(Analyzer):
         sharpe = (mean - rf)/std
         return float(sharpe)
 
-    def jensen_alpha(self, port, benchmark, rf=0):
+    def jensen_alpha(self, port, benchmark, rf=0.22/252):
         """
         Returns excess return of a portfolio according to
         Rp - (rf + beta x (rm - rf))
