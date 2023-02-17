@@ -48,7 +48,11 @@ class ReturnAnalyzer(Analyzer):
         temp = {'Params': [],
                 'Beta': [],
                 'Sharpe':[],
-                'Alpha':[]
+                'Alpha':[],
+                'Sortino Ratio':[],
+                'Value at Risk':[],
+                'R_Squared': [],
+                'Win Rate': []
                 }
         for i in range(len(self.data_path)):
             filepath = self.data_path[i]
@@ -66,19 +70,21 @@ class ReturnAnalyzer(Analyzer):
                 # Report Metrics
                 port_sharpe = self.sharpe_ratio(port)
                 port_alpha, port_beta = self.jensen_alpha(port, mkt_port, alt)
-                information_ratio = self.information_ratio(port, mkt_port)
+                sortino_ratio = self.sortino_ratio(port, mkt_port)
                 var = self.value_at_risk(port)
                 r_2 = self.r_squared(port, mkt_port)
-                tail_ratio = self.tail_ratio(port, mkt_port)
+                win_rate = self.win_rate(port)
+                # tail_ratio = self.tail_ratio(port, mkt_port)
                 
                 temp['Params'].append(self.port_params['port_name'])
                 temp['Beta'].append(port_beta)
                 temp['Sharpe'].append(port_sharpe*math.sqrt(252))
                 temp['Alpha'].append(port_alpha)
-                temp['Information Ratio'].append(information_ratio)
+                temp['Sortino Ratio'].append(sortino_ratio)
                 temp['Value at Risk'].append(var)
                 temp['R_Squared'].append(r_2)
-                temp['Tail Ratio'].append(tail_ratio)
+                temp['Win Rate'].append(win_rate)
+                # temp['Tail Ratio'].append(tail_ratio)
                 
         df_metric = pd.DataFrame(data=temp)
         return df_metric
@@ -116,28 +122,38 @@ class ReturnAnalyzer(Analyzer):
         port['Excess Return'] = port['Daily Return'] - benchmark['Daily Return']
         return port_alpha, port_beta
 
-    def information_ratio(self, port, benchmark, rf=0.2/252):
+    def sortino_ratio(self, port, benchmark, periods=252, rf=0.2/252):
         """
-        Calculates the information ratio.
+        Calculates the sortino ratio.
         """
-        excess_ret = port['Daily Retybr'] - benchmark['Daily Return']
+        port_ret = pd.DataFrame(port['Daily Return'].dropna())
         
-        return excess_ret.mean() / excess_ret.std()
+        return float((port_ret.mean() - rf) / port_ret.std() *np.sqrt(periods))
 
     def r_squared(self, port, benchmark):
         """
         Calculates the linear fit of the portfolio to the market
         """
-        r_val = _linregress(port['Daily Return'], benchmark['Daily Return'])
+        r_val = _linregress(port['Daily Return'], benchmark['Daily Return'])[2]
         return r_val**2
     
-    def tail_ratio(self, port, cutoff=0.95):
+    def win_rate(self, port):
         """
-        Calculates the two-end tail ratio.
+        Calculates the win rate for a period
         """
-        return abs(port['Daily Return'].quantile(cutoff) / port['Daily Return'].quantile(1-cutoff))
+        try:
+            return len(port[port['Daily Return']> 0]) / len(port[port['Daily Return'] != 0])
+        except Exception:
+            return 0
+    
+    # def tail_ratio(self, port, cutoff=0.95):
+    #     """
+    #     Calculates the two-end tail ratio.
+    #     """
+    #     port_ret = pd.DataFrame(data=port['Daily Return'])
+    #     return abs(port_ret.quantile(cutoff, axis=1) / port_ret.quantile(1-cutoff, axis=1))
 
-    def value_at_risk(port, sigma=1, confidence=0.95):
+    def value_at_risk(self, port, sigma=1, confidence=0.95):
         """
         Calculates the daily value-at-risk"""
         port_ret = port['Daily Return']
@@ -150,7 +166,7 @@ class ReturnAnalyzer(Analyzer):
         Calculates rolling alpha and beta of a portfolio
         """
         df_comp = pd.DataFrame(data={
-            'port':port['Daily Return']
+            'port':port['Daily Return'],
             'benchmark': benchmark['Daily Return']})
         df_comp.fillna(0)
         corr = df_comp.rolling(int(periods)).corr().unstack()['port']['benchmark']
